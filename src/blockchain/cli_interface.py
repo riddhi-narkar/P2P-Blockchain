@@ -68,10 +68,12 @@ def use_blockchain(blockchain: Blockchain, current_address: Tuple[str, int], pee
     elif answer['main'] == 'Show chain':
         print(blockchain)  # Display the chain
         # if blockchain.validate_chain():  # Assuming validate_chain is a method for chain validation
-        if blockchain.is_valid():
+        if blockchain.is_valid()[1]:
             print("\nChain is valid.")
+            print(f"Time to validate chain (nanoseconds): {blockchain.is_valid()[0]}")
         else:
             print("\nChain is invalid!")
+            print(f"Time to validate chain (nanoseconds): {blockchain.is_valid()[0]}")
         input('\nPress [ Enter ] to continue')
         clearconsole()
 
@@ -98,7 +100,8 @@ def use_blockchain(blockchain: Blockchain, current_address: Tuple[str, int], pee
             clearconsole()
     # MINE BLOCK
     elif answer['main'] == 'Mine block':
-        blockchain.add_block(current_address)
+        time = blockchain.add_block(current_address)
+        print(f"Time to add block (nanoseconds): {time}")
         clearconsole()
     # QUIT
     elif answer['main'] == 'Quit':

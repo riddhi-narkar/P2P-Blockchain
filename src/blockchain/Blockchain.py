@@ -27,15 +27,20 @@ class Blockchain:
 
     def is_valid(self, chain_to_validate: List = None) -> bool:
         # if no chain in params, use self.chain. Else use chain in params.
+        start_time = time.perf_counter_ns()
         chain = self.chain if chain_to_validate is None else chain_to_validate
         for index in range(1, len(chain)):
             current_block = chain[index]
             previous_block = chain[index - 1]
             if current_block["previous_hash"] != previous_block["hash"]:
-                return False
-        return True
+                elapsed_time_ns = time.perf_counter_ns() - start_time
+                return (elapsed_time_ns, False)
+                # return False
+        elapsed_time_ns = time.perf_counter_ns() - start_time
+        return (elapsed_time_ns, True)
 
     def add_block(self, miner_address):
+        start_time = time.perf_counter_ns()  # Start time
         # We reward those who mine with 1 coin, so we append a new transaction with this reward
         self.pending_transactions.append(Transaction('blockchain', miner_address, 1).serialized) # from blockchain, to miner, 1 coin
         # construct a new block
@@ -44,8 +49,10 @@ class Blockchain:
             self.chain[-1]['hash']
         )
         print(f'Mining block #{len(self.chain)}...')
-        # mine its
+
         new_block.mine(self.difficulty)
+        # elapsed_time_ns = time.perf_counter_ns() - start_time  # End time
+        # print(f"Time to add block (nanoseconds): {elapsed_time_ns}")
 
         new_block_serialized = new_block.serialized
         new_block_serialized['computed_hash'] = self.compute_block_hash(new_block_serialized)  # Add this line
@@ -55,6 +62,9 @@ class Blockchain:
 
         # Clear the pending transactions
         self.pending_transactions = []
+        elapsed_time_ns = time.perf_counter_ns() - start_time  # End time
+        # print(f"Time to add block (nanoseconds): {elapsed_time_ns}")
+        return elapsed_time_ns
 
 
     def new_transaction(self, transaction: Transaction):
