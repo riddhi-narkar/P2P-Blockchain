@@ -104,25 +104,49 @@ class Blockchain:
         # block_string = f"{block_serialized['index']}{block_serialized['previous_hash']}{block_serialized['timestamp']}{block_serialized['nonce']}{block_serialized['transactions']}"
         # return hashlib.sha256(block_string.encode()).hexdigest()
 
-    def validate_chain(self):
-        """
-        Validate the entire blockchain by checking the hashes and the previous block hash.
-        """
-        for i in range(1, len(self.chain)):
-            current_block = self.chain[i]
-            previous_block = self.chain[i - 1]
+    # def validate_chain(self):
+    #     """
+    #     Validate the entire blockchain by checking the hashes and the previous block hash.
+    #     """
+    #     for i in range(1, len(self.chain)):
+    #         current_block = self.chain[i]
+    #         previous_block = self.chain[i - 1]
 
-            # Ensure the current block's hash matches the computed hash
-            if current_block['hash'] != current_block['computed_hash']:
-                print(f"Block {i} has invalid hash!")
-                return False
+    #         if(i==1):
+    #             print(f"Blockchain is valid!")
 
-            # Ensure the previous block's hash matches the 'previous_hash' in the current block
-            if current_block['previous_hash'] != previous_block['hash']:
-                print(f"Block {i} has invalid previous_hash!")
-                return False
+    #         # Ensure the current block's hash matches the computed hash
+    #         if current_block['hash'] != current_block['computed_hash']:
+    #             print(f"Block {i} has invalid hash!")
+    #             return False
 
-        return True
+    #         # Ensure the previous block's hash matches the 'previous_hash' in the current block
+    #         if current_block['previous_hash'] != previous_block['hash']:
+    #             print(f"Block {i} has invalid previous_hash!")
+    #             return False
+    #         else:
+    #             print(f"Blockchain is valid!")
+    #             return True
+    # def validate_chain(self):
+    #     """
+    #     Validate the entire blockchain by checking the hashes and the previous block hash.
+    #     """
+    #     for i in range(1, len(self.chain)):
+    #         current_block = self.chain[i]
+    #         previous_block = self.chain[i - 1]
+
+    #         # Ensure the current block's hash matches the computed hash
+    #         if current_block['hash'] != current_block['computed_hash']:
+    #             print(f"Block {i} has invalid hash!")
+    #             return False
+
+    #         # Ensure the previous block's hash matches the 'previous_hash' in the current block
+    #         if current_block['previous_hash'] != previous_block['hash']:
+    #             print(f"Block {i} has invalid previous_hash!")
+    #             return False
+
+    #     print("Blockchain is valid!")
+    #     return True
 
 
 

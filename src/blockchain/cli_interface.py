@@ -67,7 +67,8 @@ def use_blockchain(blockchain: Blockchain, current_address: Tuple[str, int], pee
     # ______________________________________________________
     elif answer['main'] == 'Show chain':
         print(blockchain)  # Display the chain
-        if blockchain.validate_chain():  # Assuming validate_chain is a method for chain validation
+        # if blockchain.validate_chain():  # Assuming validate_chain is a method for chain validation
+        if blockchain.is_valid():
             print("\nChain is valid.")
         else:
             print("\nChain is invalid!")
